@@ -42,7 +42,8 @@ jobs:
       - name: Build APK
         run: |
           export PATH="$HOME/go/bin:$PATH"
-          wails3 build GOOS=android
+          wails3 task install:deps YES=true
+          wails3 task build GOOS=android
 
       - name: Short SHA
         id: sha

@@ -53,7 +53,15 @@ jobs:
           go mod download
           wails3 task android:install:deps YES=true
           wails3 task build GOOS=android ARCH=arm64
+          wails3 task android:compile:go:shared ARCH=amd64
           wails3 task android:assemble:apk BIN_DIR=build
+
+      - name: Test install on Android 15 emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          arch: x86_64
+          script: adb install build/cardvault.apk
 
       - name: Short SHA
         id: sha

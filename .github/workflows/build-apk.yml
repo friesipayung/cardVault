@@ -49,8 +49,9 @@ jobs:
       - name: Build APK
         run: |
           export PATH="$HOME/go/bin:$PATH"
+          export CI=true
           go mod download
-          wails3 task android:install:deps --yes
+          wails3 task android:install:deps YES=true
           wails3 task build GOOS=android
 
       - name: Short SHA

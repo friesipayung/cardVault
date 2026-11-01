@@ -33,7 +33,6 @@ tasks:
       - go run build/android/scripts/deps/install_deps.go
     env:
       TASK_FORCE_YES: '{{if .YES}}true{{else}}false{{end}}'
-    prompt: This will check and install Android development dependencies. Continue?
 
   build:
     summary: Creates a debug build of the application for Android

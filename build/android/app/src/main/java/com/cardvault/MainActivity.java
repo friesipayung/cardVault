@@ -1,4 +1,4 @@
-package com.wails.app;
+package com.cardvault.app;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;

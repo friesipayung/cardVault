@@ -1,4 +1,4 @@
-package com.wails.app;
+package com.cardvault.app;
 
 import android.net.Uri;
 import android.util.Log;

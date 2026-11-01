@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import QRCode from 'qrcode';
   import JsBarcode from 'jsbarcode';
   import * as CardService from '../../bindings/github.com/friesipayung/cardVault/cardservice.js';
@@ -17,6 +17,8 @@
   let form = $state({ provider_name: '', card_number: '', card_holder_name: '', barcode_type: 'QR', barcode_value: '' });
   let providerForm = $state({ name: '', barcode_format: 'Barcode', country: '' });
   let loading = $state(false);
+  let scanning = $state(false);
+  let scanner: any = null;
 
   async function load() {
     loading = true;
@@ -102,7 +104,32 @@
     };
   }
 
+  async function startScan() {
+    scanning = true;
+    const { Html5Qrcode } = await import('html5-qrcode');
+    scanner = new Html5Qrcode('reader');
+    await scanner.start(
+      { facingMode: 'environment' },
+      { fps: 10, qrbox: 220 },
+      (decoded: string) => {
+        form.card_number = decoded;
+        form.barcode_value = decoded;
+        stopScan();
+      },
+      () => {}
+    );
+  }
+
+  async function stopScan() {
+    if (scanner) {
+      try { await scanner.stop(); } catch {}
+      scanner = null;
+    }
+    scanning = false;
+  }
+
   onMount(load);
+  onDestroy(() => { stopScan(); });
 </script>
 
 <main>
@@ -128,7 +155,14 @@
       </select>
     </label>
     <label>Nilai Barcode (opsional) <input bind:value={form.barcode_value} /></label>
-    <button onclick={add}>Simpan</button>
+    <div class="row">
+      <button onclick={add}>Simpan</button>
+      <button onclick={startScan} disabled={scanning}>Scan Kamera</button>
+      {#if scanning}<button onclick={stopScan}>Stop</button>{/if}
+    </div>
+    {#if scanning}
+      <div id="reader" class="reader"></div>
+    {/if}
   </section>
 
   <section class="card">
@@ -198,4 +232,5 @@
   .code { flex: 0 0 140px; text-align: center; }
   .info { flex: 1; }
   ul { padding-left: 20px; }
+  .reader { margin-top: 12px; width: 100%; max-width: 320px; }
 </style>

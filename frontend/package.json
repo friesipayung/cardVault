@@ -16,6 +16,7 @@
   "dependencies": {
     "@sveltejs/kit": "^2.0.0",
     "@wailsio/runtime": "latest",
+    "html5-qrcode": "^2.3.8",
     "jsbarcode": "^3.12.3",
     "qrcode": "^1.5.4"
   },

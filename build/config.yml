@@ -7,7 +7,7 @@ version: '3'
 info:
   companyName: "cardVault" # The name of the company
   productName: "cardVault" # The name of the application
-  productIdentifier: "com.cardvault.app" # The unique product identifier
+  productIdentifier: "com.wails.app" # The unique product identifier
   description: "A program that does X" # The application description
   copyright: "(c) 2025, My Company" # Copyright text
   comments: "Some Product Comments" # Comments

@@ -1,4 +1,4 @@
-package com.cardvault.app;
+package com.wails.app;
 
 import android.app.Activity;
 import android.app.Notification;

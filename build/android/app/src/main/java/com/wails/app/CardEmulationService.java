@@ -1,4 +1,4 @@
-package com.cardvault.app;
+package com.wails.app;
 
 import android.nfc.cardemulation.HostApduService;
 import android.os.Bundle;

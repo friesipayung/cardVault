@@ -8,5 +8,5 @@
 }
 
 # Keep Wails bridge classes
--keep class com.cardvault.app.WailsBridge { *; }
--keep class com.cardvault.app.WailsJSBridge { *; }
+-keep class com.wails.app.WailsBridge { *; }
+-keep class com.wails.app.WailsJSBridge { *; }

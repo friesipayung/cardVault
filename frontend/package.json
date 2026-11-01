@@ -14,14 +14,14 @@
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json"
   },
   "dependencies": {
-    "@sveltejs/kit": "^2.0.0",
+    "@sveltejs/kit": "^3.1.1",
     "@wailsio/runtime": "latest",
     "html5-qrcode": "^2.3.8",
     "jsbarcode": "^3.12.3",
     "qrcode": "^1.5.4"
   },
   "devDependencies": {
-    "@sveltejs/adapter-static": "^3.0.0",
+    "@sveltejs/adapter-static": "^4.0.1",
     "@sveltejs/vite-plugin-svelte": "^4.0.0",
     "@types/node": "^26.6.6",
     "@types/qrcode": "^1.5.6",

@@ -25,6 +25,13 @@ jobs:
         with:
           node-version: '24'
 
+      - name: Install system deps (GTK/WebKit for Wails CLI)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-4-dev libwebkitgtk-6.0-dev libsoup-3.0-dev pkg-config
+          pkg-config --modversion gtk4
+          pkg-config --modversion webkitgtk-6.0
+
       - name: Install Wails CLI
         run: go install github.com/wailsapp/wails/v3/cmd/wails3@latest
 
@@ -35,13 +42,6 @@ jobs:
       - name: Build frontend
         working-directory: frontend
         run: npm run build
-
-      - name: Install system deps (for go mod tidy)
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libgtk-4-dev libwebkitgtk-6.0-dev libsoup-3.0-dev pkg-config
-          pkg-config --modversion gtk4
-          pkg-config --modversion webkitgtk-6.0
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v4

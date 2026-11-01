@@ -63,13 +63,13 @@ func main() {
 		fmt.Println("✓ adb is installed")
 	}
 
-	// Check emulator
+	// Check emulator (optional for builds; only needed to run on an emulator)
 	if !checkCommand("emulator", "-list-avds") {
 		if androidHome != "" {
 			emulatorPath := filepath.Join(androidHome, "emulator")
-			errors = append(errors, fmt.Sprintf("emulator not found. Add %s to PATH", emulatorPath))
+			fmt.Printf("⚠ emulator not found (optional for build). Add %s to PATH to run on emulator.\n", emulatorPath)
 		} else {
-			errors = append(errors, "emulator not found. Install Android Emulator via SDK Manager")
+			fmt.Println("⚠ emulator not found (optional for build). Install Android Emulator via SDK Manager to run on emulator.")
 		}
 	} else {
 		fmt.Println("✓ Android Emulator is installed")

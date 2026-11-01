@@ -192,6 +192,7 @@
           <div>{c.card_holder_name}</div>
           <div class="row">
             <button onclick={() => remove(c.id)}>Hapus</button>
+            <button onclick={() => { navigator.clipboard.writeText(c.card_number); CardService.TouchCard(c.id); }}>Salin</button>
           </div>
         </div>
       </div>

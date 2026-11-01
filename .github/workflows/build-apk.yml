@@ -50,6 +50,7 @@ jobs:
         run: |
           export PATH="$HOME/go/bin:$PATH"
           export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig:${PKG_CONFIG_PATH}"
+          go mod download
           wails3 task install:deps YES=true
           wails3 task build GOOS=android
 

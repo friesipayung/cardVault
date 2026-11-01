@@ -176,8 +176,7 @@ tasks:
   generate:bindings:
     summary: Generates bindings for the frontend
     run: once
-    deps:
-      - task: go:mod:tidy
+    deps: []
     sources:
       - "**/*.[jt]s"
       - exclude: frontend/**/*

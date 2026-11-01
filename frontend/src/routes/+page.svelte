@@ -17,6 +17,8 @@
   let form = $state({ provider_name: '', card_number: '', card_holder_name: '', barcode_type: 'QR', barcode_value: '' });
   let providerForm = $state({ name: '', barcode_format: 'Barcode', country: '' });
   let loading = $state(false);
+  let backupJson = $state('');
+  let importResult = $state('');
   let scanning = $state(false);
   let scanner: any = null;
 
@@ -128,6 +130,17 @@
     scanning = false;
   }
 
+  async function exportData() {
+    backupJson = await CardService.ExportData();
+  }
+
+  async function importData() {
+    if (!backupJson) return;
+    const n = await CardService.ImportData(backupJson);
+    importResult = `Imported ${n} kartu`;
+    await load();
+  }
+
   onMount(load);
   onDestroy(() => { stopScan(); });
 </script>
@@ -202,6 +215,16 @@
         <li>{p.name} ({p.barcode_format}) <button onclick={() => removeProvider(p.id)}>x</button></li>
       {/each}
     </ul>
+  </section>
+
+  <section class="card">
+    <h2>Backup / Restore (JSON)</h2>
+    <div class="row">
+      <button onclick={exportData}>Export</button>
+      <button onclick={importData}>Import</button>
+    </div>
+    <textarea bind:value={backupJson} rows="6" placeholder="JSON backup..."></textarea>
+    {#if importResult}<p>{importResult}</p>{/if}
   </section>
 
   <section class="card">

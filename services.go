@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"github.com/friesipayung/cardVault/internal/card"
 	"github.com/friesipayung/cardVault/internal/db"
 	"github.com/friesipayung/cardVault/internal/nfc"
@@ -54,6 +55,50 @@ func (s *CardService) DeleteCard(id int64) error {
 
 func (s *CardService) TouchCard(id int64) error {
 	return s.cards.Touch(id)
+}
+
+// ExportData returns JSON of providers + cards for backup.
+func (s *CardService) ExportData() (string, error) {
+	cards, err := s.cards.List("")
+	if err != nil {
+		return "", err
+	}
+	providers, err := s.providers.List("")
+	if err != nil {
+		return "", err
+	}
+	payload := map[string]any{
+		"cards":     cards,
+		"providers": providers,
+	}
+	b, err := json.MarshalIndent(payload, "", "  ")
+	if err != nil {
+		return "", err
+	}
+	return string(b), nil
+}
+
+// ImportData imports JSON produced by ExportData. Returns number of cards added.
+func (s *CardService) ImportData(jsonStr string) (int, error) {
+	var payload struct {
+		Cards     []card.Card       `json:"cards"`
+		Providers []provider.Provider `json:"providers"`
+	}
+	if err := json.Unmarshal([]byte(jsonStr), &payload); err != nil {
+		return 0, err
+	}
+	for _, p := range payload.Providers {
+		p.ID = 0
+		_, _ = s.providers.Create(&p)
+	}
+	n := 0
+	for _, c := range payload.Cards {
+		c.ID = 0
+		if _, err := s.cards.Create(&c); err == nil {
+			n++
+		}
+	}
+	return n, nil
 }
 
 // ProviderService exposes provider operations.

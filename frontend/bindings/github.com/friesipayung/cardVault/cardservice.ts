@@ -22,8 +22,22 @@ export function DeleteCard(id: number): $CancellablePromise<void> {
     return $Call.ByID(2785300738, id);
 }
 
+/**
+ * ExportData returns JSON of providers + cards for backup.
+ */
+export function ExportData(): $CancellablePromise<string> {
+    return $Call.ByID(4088853533);
+}
+
 export function GetCard(id: number): $CancellablePromise<card$0.Card | null> {
     return $Call.ByID(1628100011, id);
+}
+
+/**
+ * ImportData imports JSON produced by ExportData. Returns number of cards added.
+ */
+export function ImportData(jsonStr: string): $CancellablePromise<number> {
+    return $Call.ByID(93656382, jsonStr);
 }
 
 export function ListCards(search: string): $CancellablePromise<card$0.Card[] | null> {

@@ -15,12 +15,15 @@
   },
   "dependencies": {
     "@sveltejs/kit": "^2.0.0",
-    "@wailsio/runtime": "latest"
+    "@wailsio/runtime": "latest",
+    "jsbarcode": "^3.12.3",
+    "qrcode": "^1.5.4"
   },
   "devDependencies": {
     "@sveltejs/adapter-static": "^3.0.0",
     "@sveltejs/vite-plugin-svelte": "^4.0.0",
     "@types/node": "^26.6.6",
+    "@types/qrcode": "^1.5.6",
     "svelte": "^5.0.0",
     "svelte-check": "^4.0.0",
     "tslib": "^2.6.2",

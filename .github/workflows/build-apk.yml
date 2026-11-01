@@ -39,7 +39,9 @@ jobs:
       - name: Install system deps (for go mod tidy)
         run: |
           sudo apt-get update
-          sudo apt-get install -y libgtk-4-dev libwebkitgtk-6.0-dev libsoup-3.0-dev
+          sudo apt-get install -y libgtk-4-dev libwebkitgtk-6.0-dev libsoup-3.0-dev pkg-config
+          pkg-config --modversion gtk4
+          pkg-config --modversion webkitgtk-6.0
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v4
@@ -47,6 +49,7 @@ jobs:
       - name: Build APK
         run: |
           export PATH="$HOME/go/bin:$PATH"
+          export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig:${PKG_CONFIG_PATH}"
           wails3 task install:deps YES=true
           wails3 task build GOOS=android
 

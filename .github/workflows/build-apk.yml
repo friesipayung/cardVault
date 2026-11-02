@@ -63,15 +63,15 @@ jobs:
           arch: x86_64
           script: adb install build/cardvault.apk
 
-      - name: Short SHA
-        id: sha
-        run: echo "short=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+      - name: Release timestamp
+        id: ts
+        run: echo "ts=$(date -u +%y%m%d%H%M)" >> "$GITHUB_OUTPUT"
 
       - name: Create release
         uses: softprops/action-gh-release@v3
         with:
-          tag_name: alpha-${{ steps.sha.outputs.short }}
-          name: alpha-${{ steps.sha.outputs.short }}
+          tag_name: alpha-${{ steps.ts.outputs.ts }}
+          name: alpha-${{ steps.ts.outputs.ts }}
           files: |
             build/**/*.apk
           prerelease: true
